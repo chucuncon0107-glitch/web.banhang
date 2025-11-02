@@ -127,10 +127,23 @@ Cập nhật thông tin trong `src/components/Footer.jsx` và `src/pages/Contact
 
 ## 🚀 Triển Khai
 
-Website có thể deploy lên:
+### GitHub Pages
+
+Website đã được cấu hình sẵn để deploy lên GitHub Pages!
+
+**Link website:** https://chucuncon0107-glitch.github.io/web_banhang/
+
+**Cách deploy:**
+1. Push code lên GitHub (GitHub Actions sẽ tự động deploy)
+2. Hoặc chạy: `npm run deploy`
+
+Xem chi tiết trong file `HUONG_DAN_DEPLOY.md`
+
+### Các Platform Khác
+
+Website cũng có thể deploy lên:
 - Vercel
 - Netlify  
-- GitHub Pages
 - Firebase Hosting
 
 ## 📞 Hỗ Trợ
