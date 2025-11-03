@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Newspaper, TrendingUp, BookOpen, Tag, Calendar, User, ArrowRight } from 'lucide-react';
 
 const News = () => {
+  const navigate = useNavigate(); 
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [email, setEmail] = useState('');
   const [subscribeSuccess, setSubscribeSuccess] = useState(false);
@@ -154,7 +156,8 @@ const News = () => {
         </div>
 
         {/* Featured Article */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8 cursor-pointer"
+          onClick={() => navigate(`/news/${featuredArticle.id}`)}>
           <div className="grid grid-cols-1 lg:grid-cols-2">
             <div className="bg-gradient-to-br from-primary-500 to-primary-700 p-12 flex items-center justify-center">
               <img src={`${import.meta.env.BASE_URL}${featuredArticle.image}`} alt={featuredArticle.title} className="w-full h-80 object-contain" />
@@ -179,7 +182,11 @@ const News = () => {
                   {featuredArticle.author}
                 </div>
               </div>
-              <button className="btn-primary w-fit flex items-center">
+              <button className="btn-primary w-fit flex items-center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/news/${featuredArticle.id}`);
+                }}>
                 Đọc thêm
                 <ArrowRight className="h-4 w-4 ml-2" />
               </button>
@@ -208,7 +215,8 @@ const News = () => {
         {/* Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredArticles.map((article) => (
-            <article key={article.id} className="card group cursor-pointer">
+            <article key={article.id} className="card group cursor-pointer"
+              onClick={() => navigate(`/news/${article.id}`)}>>
               <div className="bg-gradient-to-br from-primary-400 to-primary-600 p-8 flex items-center justify-center">
                 <img src={`${import.meta.env.BASE_URL}${article.image}`} alt={article.title} className="w-full h-48 object-contain" />
               </div>
@@ -238,13 +246,6 @@ const News = () => {
               </div>
             </article>
           ))}
-        </div>
-
-        {/* Load More */}
-        <div className="text-center mt-12">
-          <button className="btn-secondary">
-            Xem Thêm Bài Viết
-          </button>
         </div>
 
         {/* Newsletter Subscription */}

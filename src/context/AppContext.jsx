@@ -16,6 +16,11 @@ export const AppProvider = ({ children }) => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  const [orders, setOrders] = useState(() => {
+    const savedOrders = localStorage.getItem('orders');
+    return savedOrders ? JSON.parse(savedOrders) : [];
+  });
+
   const [compareList, setCompareList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -23,6 +28,10 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
+
+    useEffect(() => {
+    localStorage.setItem('orders', JSON.stringify(orders));
+  }, [orders]);
 
   // Cart functions
   const addToCart = (product, quantity = 1) => {
@@ -86,6 +95,35 @@ export const AppProvider = ({ children }) => {
     setCompareList([]);
   };
 
+// Orders functions
+const placeOrder = (address) => {
+  if (cart.length === 0) {
+    alert('Giỏ hàng trống, không thể đặt hàng!');
+    return;
+  }
+
+  if (!address || address.trim() === '') {
+    alert('Vui lòng nhập địa chỉ giao hàng trước khi đặt hàng!');
+    return;
+  }
+
+  const newOrder = {
+    id: `DH${Date.now()}`, // Mã đơn hàng duy nhất
+    date: new Date().toLocaleDateString('vi-VN'),
+    products: cart,
+    total: cart.reduce((total, item) => total + item.price * item.quantity, 0),
+    payment: 'Thanh toán khi nhận hàng',
+    status: 'pending',
+    estimatedDelivery: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toLocaleDateString('vi-VN'),
+    deliveryAddress: address.trim(), // ✅ lấy từ người dùng
+  };
+
+  setOrders(prev => [...prev, newOrder]);
+  clearCart();
+  alert('🎉 Đặt hàng thành công!');
+};
+
+
   const value = {
     // Cart
     cart,
@@ -95,6 +133,8 @@ export const AppProvider = ({ children }) => {
     clearCart,
     getCartTotal,
     getCartItemsCount,
+    orders,
+    placeOrder,
     // Compare
     compareList,
     addToCompare,
