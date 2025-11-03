@@ -1,13 +1,16 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
+
 import Header from './components/Header';
 import Footer from './components/Footer';
+
 import Home from './pages/Home';
 import About from './pages/About';
 import Products from './pages/Products';
 import Orders from './pages/Orders';
 import News from './pages/News';
+import NewsDetail from './pages/NewsDetail';
 import Utilities from './pages/Utilities';
 import Contact from './pages/Contact';
 
@@ -24,6 +27,7 @@ function App() {
               <Route path="/products" element={<Products />} />
               <Route path="/orders" element={<Orders />} />
               <Route path="/news" element={<News />} />
+              <Route path="/news/:id" element={<NewsDetail />} />
               <Route path="/utilities" element={<Utilities />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
